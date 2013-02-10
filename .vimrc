@@ -57,7 +57,7 @@ au VimResized * exe "normal! \<c-w>="
 set incsearch                        " show search matches as you type
 "set listchars=tab:▸\ ,trail:·    " set custom characters for non-printable
                                      " characters
-set list                             " always show non-printable characters
+"set list                             " always show non-printable characters
 set matchtime=3                      " set brace match time
 set scrolloff=3                      " maintain more context around the cursor
 set linebreak                        " wrap lines at logical word boundaries
@@ -99,7 +99,7 @@ set nostartofline                    " do not change the X position of the
 
 let mapleader=","                    " set our personal modifier key to ','
 
-set pastetoggle=<F2>                 " F2 temporarily disables formatting when
+"set pastetoggle=<F2>                 " F2 temporarily disables formatting when
                                      " pasting text
 
 " Map Ctrl-BackSpace to delete the previous word. Since URxvt maps
@@ -118,6 +118,20 @@ map Y y$
 map <silent> <C-s> :w<CR>
 imap <silent> <C-s> <Esc>:w<CR>a
 
+vnoremap < <gv
+vnoremap > >gv
+
+vmap <tab> >gv
+vmap <s-tab> <gv
+
+map <ESC>[D <C-Left>
+map <ESC>[C <C-Right>
+map! <ESC>[D <C-Left>
+map! <ESC>[C <C-Right>
+
+nnoremap <silent> <C-Left> :bprevious<CR>
+nnoremap <silent> <C-Right> :bnext<CR>
+
 " Switch Ctri-i and Ctrl-o, jumping backwards using Ctrl-i and forwards using
 " Ctrl-o seems more logical given the keyboard layout.
 nnoremap <C-i> <C-o>
@@ -125,6 +139,24 @@ nnoremap <C-o> <C-i>
 
 " Remap Ctrl-q to close the current buffer
 nmap <silent> <C-q> :bw!<CR>
+
+" Toggle for side bar
+fu! UiToggle(command)
+  let b = bufnr("%")
+  execute a:command
+  execute ( bufwinnr(b) . "wincmd w" )
+  execute ":set number!"
+endf
+
+" Toggle the file system tree with F2
+nnoremap <silent> <F2> :call UiToggle(":NERDTreeToggle")<CR>
+
+" Toggle the tag list
+let Tlist_Use_Right_Window = 1
+nnoremap <silent> <F3> :call UiToggle(":TlistToggle")<CR>
+
+" Close the current buffer
+map <leader>bd :Bclose<CR>
 
 " Remap K to do nothing instead of searching the man pages.
 nnoremap K <nop>
@@ -192,6 +224,9 @@ endfunction
 " Improve highlighting of matching characters in Command-T's popup window.
 highlight default link CommandTCharMatched Question
 
+" Increase the max number of files Command-T caches
+let g:CommandTMaxFiles=3330000
+
 " Show the Command-T popup at the top of the screen with a maximum height of 20
 " lines.
 let g:CommandTMatchWindowReverse = 1
@@ -227,6 +262,8 @@ let g:yankring_n_keys = 'D x X'
 " screen height.
 let g:VimuxHeight = "15"
 let g:VimuxUseNearestPane = 1
+
+set tag=./tags;/
 
 "-------------------------------------------------------------------------------
 " Configure (keyword) completion
@@ -328,8 +365,39 @@ augroup SimultaneousEdits
     autocmd SwapExists * :let v:swapchoice = 'e'
 augroup End
 
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+   let l:currentBufNum = bufnr("%")
+   let l:alternateBufNum = bufnr("#")
+
+   if buflisted(l:alternateBufNum)
+     buffer #
+   else
+     bnext
+   endif
+
+   if bufnr("%") == l:currentBufNum
+     new
+   endif
+
+   if buflisted(l:currentBufNum)
+     execute("bdelete! ".l:currentBufNum)
+   endif
+endfunction
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
 " Read in a custom Vim configuration local to the working directory.
 if filereadable(".project.vim")
     so .project.vim
 endif
 
+" Close vim if the last window is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
