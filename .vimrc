@@ -16,7 +16,7 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-syntax on                            " enable syntax highlighting
+"set term=$TERM
 colorscheme wombat256mod             " set colorscheme for 256 color terminals
 
 set t_so=[7m                         " set escape codes for standout mode
@@ -30,6 +30,7 @@ set number                           " always show line numbers
 set numberwidth=5                    " we are good for up to 99999 lines
 set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
+set cursorline                       " highlight current line"
 
 " Enable Doxygen syntax highlighting.
 let g:load_doxygen_syntax=1
@@ -46,6 +47,8 @@ highlight link doxygenSmallSpecial SpecialComment
 highlight doxygenParamName cterm=bold ctermfg=249
 highlight link doxygenArgumentWord doxygenParamName
 highlight link doxygenCodeWord doxygenParamName
+
+syntax on                            " enable syntax highlighting
 
 " Resize splits when the window is resized.
 au VimResized * exe "normal! \<c-w>="
@@ -124,10 +127,10 @@ vnoremap > >gv
 vmap <tab> >gv
 vmap <s-tab> <gv
 
-map <ESC>[D <C-Left>
-map <ESC>[C <C-Right>
-map! <ESC>[D <C-Left>
-map! <ESC>[C <C-Right>
+map <ESC>[1;5D <C-Left>
+map <ESC>[1;5C <C-Right>
+map! <ESC>[1;5D <C-Left>
+map! <ESC>[1;5C <C-Right>
 
 nnoremap <silent> <C-Left> :bprevious<CR>
 nnoremap <silent> <C-Right> :bnext<CR>
@@ -138,14 +141,14 @@ nnoremap <C-i> <C-o>
 nnoremap <C-o> <C-i>
 
 " Remap Ctrl-q to close the current buffer
-nmap <silent> <C-q> :bw!<CR>
+nmap <silent> <C-q> :Bclose<CR>
 
 " Toggle for side bar
 fu! UiToggle(command)
   let b = bufnr("%")
   execute a:command
   execute ( bufwinnr(b) . "wincmd w" )
-  execute ":set number!"
+  "execute ":set number!"
 endf
 
 " Toggle the file system tree with F2
@@ -186,7 +189,9 @@ function! VimuxMake()
     call VimuxRunCommand(&makeprg . " 2>&1 | tee /tmp/errors.err; vim --servername " . v:servername . " --remote-send '<Esc>:cfile /tmp/errors.err | cw<CR><CR>:call VimuxClosePanes()<CR>'")
 endfunction
 
-nmap <silent> <leader>m :silent! call VimuxMake()<CR>
+"nmap <silent> <leader>m :silent! call VimuxMake()<CR>
+nmap <silent> <leader>m :call Make()<CR>
+nmap <C-F5> ,m
 
 " Remap Ctrl-k and Ctrl-j to jump to the previous and next compiler error
 " respectively.
@@ -225,7 +230,11 @@ endfunction
 highlight default link CommandTCharMatched Question
 
 " Increase the max number of files Command-T caches
-let g:CommandTMaxFiles=3330000
+let g:CommandTMaxFiles=30000
+let g:CommandTMaxDepth=5
+
+let g:CommandTMaxCachedDirectories=0
+
 
 " Show the Command-T popup at the top of the screen with a maximum height of 20
 " lines.
@@ -263,41 +272,40 @@ let g:yankring_n_keys = 'D x X'
 let g:VimuxHeight = "15"
 let g:VimuxUseNearestPane = 1
 
-set tag=./tags;/
-
 "-------------------------------------------------------------------------------
 " Configure (keyword) completion
 "-------------------------------------------------------------------------------
+set tag=./tags;/
 
-function! OmniPopup(action)
-    if pumvisible()
-        if a:action == "down"
-            return "\<C-N>"
-        elseif a:action == "up"
-            return "\<C-P>"
-        endif
-    endif
-    return a:action
-endfunction
+"function! OmniPopup(action)
+    "if pumvisible()
+        "if a:action == "down"
+            "return "\<C-N>"
+        "elseif a:action == "up"
+            "return "\<C-P>"
+        "endif
+    "endif
+    "return a:action
+"endfunction
 
-" Remap Ctrl-j and Ctrl-k to move up and down in popup lists.
-inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
-inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
+"" Remap Ctrl-j and Ctrl-k to move up and down in popup lists.
+"inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
+"inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
 
-" Open the completion menu using C-Space, note that C-Space inserts the <Nul> character.
-inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
+"" Open the completion menu using C-Space, note that C-Space inserts the <Nul> character.
+"inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
 
-" Escape should always close the completion menu at once.
-inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
+"" Escape should always close the completion menu at once.
+"inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
 
-" Enter should select the currently highlighted menu item.
-inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+"" Enter should select the currently highlighted menu item.
+"inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 
-" Configure (keyword) completion.
-set completeopt=longest,menuone
+"" Configure (keyword) completion.
+"set completeopt=longest,menuone
 
-" Do not scan Boost include files.
-set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
+"" Do not scan Boost include files.
+"set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
 
 "-------------------------------------------------------------------------------
 " File type specific settings
