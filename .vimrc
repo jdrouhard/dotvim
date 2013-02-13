@@ -94,7 +94,7 @@ set history=50                       " keep 50 lines of command line history
                                      " printing
 set nostartofline                    " do not change the X position of the
                                      " cursor when paging up and down
-
+set mouse=a
 
 "-------------------------------------------------------------------------------
 " Key remappings
@@ -107,7 +107,7 @@ let mapleader=","                    " set our personal modifier key to ','
 
 " Map Ctrl-BackSpace to delete the previous word. Since URxvt maps
 " Ctrl-BackSpace to ^[^?, we need to specify that key combination here as well.
-imap <Esc><BS> <C-W>
+imap <C-BS> <C-W>
 
 " Quickly edit and reload the vimrc file.
 nmap <silent> <leader>ov :e $MYVIMRC<CR>
@@ -168,29 +168,7 @@ nnoremap K <nop>
 nnoremap Q <nop>
 
 " Remap <leader>m to execute a make.
-function! Make()
-    exe "wa"
-    exe "mak"
-    exe "cw"
-    call feedkeys("<CR>", "n")
-    call feedkeys("<CR>", "n")
-endfunction
-
-" Runs the given command, and in case the command is succesfull, closes the
-" tmux pane, otherwise, it leaves the tmux pane open for analysis.
-function! VimuxRunCommandOnce(command)
-    call VimuxRunCommand(a:command . "; if [ $? == 0 ]; then vim --servername " . v:servername . " --remote-send \"<Esc>:call VimuxClosePanes()<CR>\"; fi")
-endfunction
-
-" Runs the user-specified make command, and opens the quickfix window in case
-" there are any errors.
-function! VimuxMake()
-    exe "ccl"
-    call VimuxRunCommand(&makeprg . " 2>&1 | tee /tmp/errors.err; vim --servername " . v:servername . " --remote-send '<Esc>:cfile /tmp/errors.err | cw<CR><CR>:call VimuxClosePanes()<CR>'")
-endfunction
-
-"nmap <silent> <leader>m :silent! call VimuxMake()<CR>
-nmap <silent> <leader>m :call Make()<CR>
+nmap <silent> <leader>m :make<CR>
 nmap <C-F5> ,m
 
 " Remap Ctrl-k and Ctrl-j to jump to the previous and next compiler error
@@ -198,8 +176,40 @@ nmap <C-F5> ,m
 nmap <silent> <C-k> :cp<CR>
 nmap <silent> <C-j> :cn<CR>
 
+
+"-------------------------------------------------------------------------------
+" Search and grep
+"-------------------------------------------------------------------------------
+
 " Map ^ to grep word under cursor using Ack.
-nmap ^ :Ack<CR><CR>
+nmap ^ :AckAsync<CR><CR>
+
+" This method is essentially a simplified version of the Ack plugin itself
+" that uses Vimux
+command! -bang -nargs=* -complete=file AckAsync call s:AckAsync(<q-args>)
+function! s:AckAsync(args)
+    if empty(a:args)
+        let g:grepargs = expand("<cword>")
+    else
+        let g:grepargs = a:args . join(a:000, ' ')
+    end
+
+    call VimuxRunCommand(g:ackprg . ' ' . escape(g:grepargs, '|') . " | tee /tmp/findresults; vim --servername " . v:servername . " --remote-send '<Esc>:set efm=%f:%l:%c:%m<CR>:cfile /tmp/findresults | cw<CR><CR>:call ChangeQuickfixTitle(printf(\"[Found: %s] grep %s\", len(getqflist()), g:grepargs))<CR>:call VimuxClosePanes()<CR>'")
+    "silent execute a:cmd . " " . escape(l:grepargs, '|')
+
+    if exists("g:ackhighlight")
+        let @/=a:args
+        set hlsearch
+    end
+
+endfunction
+
+fu! ChangeQuickfixTitle(title)
+    let b = bufnr("%")
+    execute ( -1 . "wincmd w")
+    let w:quickfix_title=a:title
+    execute ( bufwinnr(b) . "wincmd w")
+endf
 
 " Use the silver searcher by default for the Ack plugin (we need a clean and
 " simple separate Ag plugin :P).
@@ -278,14 +288,14 @@ let g:VimuxUseNearestPane = 1
 set tag=./tags;/
 
 "function! OmniPopup(action)
-    "if pumvisible()
-        "if a:action == "down"
-            "return "\<C-N>"
-        "elseif a:action == "up"
-            "return "\<C-P>"
-        "endif
-    "endif
-    "return a:action
+"    if pumvisible()
+"        if a:action == "down"
+"            return "\<C-N>"
+"        elseif a:action == "up"
+"            return "\<C-P>"
+"        endif
+"    endif
+"    return a:action
 "endfunction
 
 "" Remap Ctrl-j and Ctrl-k to move up and down in popup lists.
@@ -293,19 +303,19 @@ set tag=./tags;/
 "inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
 
 "" Open the completion menu using C-Space, note that C-Space inserts the <Nul> character.
-"inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
+inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
 
 "" Escape should always close the completion menu at once.
-"inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
+inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
 
 "" Enter should select the currently highlighted menu item.
 "inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 
 "" Configure (keyword) completion.
-"set completeopt=longest,menuone
+set completeopt=longest,menuone
 
 "" Do not scan Boost include files.
-"set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
+set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
 
 "-------------------------------------------------------------------------------
 " File type specific settings
