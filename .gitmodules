@@ -19,9 +19,6 @@
 [submodule "bundle/minibufexpl"]
 	path = bundle/minibufexpl
 	url = https://github.com/fholgado/minibufexpl.vim.git
-[submodule "bundle/taglist"]
-	path = bundle/taglist
-	url = https://github.com/vim-scripts/taglist.vim.git
 [submodule "bundle/omnicppcomplete"]
 	path = bundle/omnicppcomplete
 	url = https://github.com/vim-scripts/OmniCppComplete.git
@@ -31,3 +28,9 @@
 [submodule "bundle/command-t"]
 	path = bundle/command-t
 	url = https://github.com/wincent/Command-T.git
+[submodule "bundle/molokai"]
+	path = bundle/molokai
+	url = https://github.com/tomasr/molokai.git
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git

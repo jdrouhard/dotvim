@@ -1,4 +1,17 @@
 "-------------------------------------------------------------------------------
+" Initialize pathogen
+"-------------------------------------------------------------------------------
+" Load pathogen.
+filetype off
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+" Enable plugin support based on filetypes.
+filetype on
+filetype plugin on
+filetype indent on
+
+"-------------------------------------------------------------------------------
 " Text formatting
 "-------------------------------------------------------------------------------
 
@@ -16,9 +29,9 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-"set term=$TERM
-colorscheme wombat256mod             " set colorscheme for 256 color terminals
+colorscheme molokai                  " set colorscheme for 256 color terminals
 
+"set term=$TERM
 set t_so=[7m                         " set escape codes for standout mode
 set t_ZH=[3m                         " set escape codes for italics mode
 set t_Co=256                         " force 256 colors by default
@@ -30,7 +43,7 @@ set number                           " always show line numbers
 set numberwidth=5                    " we are good for up to 99999 lines
 set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
-set cursorline                       " highlight current line"
+set cursorline                       " highlight current line
 
 " Enable Doxygen syntax highlighting.
 let g:load_doxygen_syntax=1
@@ -58,15 +71,16 @@ au VimResized * exe "normal! \<c-w>="
 "-------------------------------------------------------------------------------
 
 set incsearch                        " show search matches as you type
-"set listchars=tab:▸\ ,trail:·    " set custom characters for non-printable
+set listchars=tab:▸\ ,trail:·        " set custom characters for non-printable
                                      " characters
-"set list                             " always show non-printable characters
+set list                             " always show non-printable characters
 set matchtime=3                      " set brace match time
 set scrolloff=3                      " maintain more context around the cursor
 set linebreak                        " wrap lines at logical word boundaries
-"set showbreak=↪                   " character to display in front of wrapper
+set showbreak=↪                      " character to display in front of wrapper
                                      " lines
 set showmatch                        " enable brace highlighting
+set ignorecase                       " ignore case
 set smartcase                        " ignore case if search pattern is all
                                      " lowercase, case-sensitive otherwise
 set visualbell                       " only show a visual cue when an error
@@ -110,7 +124,7 @@ let mapleader=","                    " set our personal modifier key to ','
 imap <C-BS> <C-W>
 
 " Quickly edit and reload the vimrc file.
-nmap <silent> <leader>ov :e $MYVIMRC<CR>
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " Map Y to copy to the end of the line (which is more logical, also according
@@ -132,16 +146,18 @@ map <ESC>[1;5C <C-Right>
 map! <ESC>[1;5D <C-Left>
 map! <ESC>[1;5C <C-Right>
 
-nnoremap <silent> <C-Left> :bprevious<CR>
-nnoremap <silent> <C-Right> :bnext<CR>
+nnoremap <silent> <C-h> :bprevious<CR>
+nnoremap <silent> <C-l> :bnext<CR>
+
+nnoremap <leader>v V`]
+
+nnoremap / /\v
+vnoremap / /\v
 
 " Switch Ctri-i and Ctrl-o, jumping backwards using Ctrl-i and forwards using
 " Ctrl-o seems more logical given the keyboard layout.
 nnoremap <C-i> <C-o>
 nnoremap <C-o> <C-i>
-
-" Remap Ctrl-q to close the current buffer
-nmap <silent> <C-q> :Bclose<CR>
 
 " Toggle for side bar
 fu! UiToggle(command)
@@ -155,11 +171,12 @@ endf
 nnoremap <silent> <F2> :call UiToggle(":NERDTreeToggle")<CR>
 
 " Toggle the tag list
-let Tlist_Use_Right_Window = 1
-nnoremap <silent> <F3> :call UiToggle(":TlistToggle")<CR>
+nnoremap <silent> <F3> :call UiToggle(":TagbarToggle")<CR>
 
 " Close the current buffer
 map <leader>bd :Bclose<CR>
+" Remap Ctrl-q to close the current buffer
+nmap <silent> <C-q> :Bclose<CR>
 
 " Remap K to do nothing instead of searching the man pages.
 nnoremap K <nop>
@@ -169,65 +186,95 @@ nnoremap Q <nop>
 
 " Remap <leader>m to execute a make.
 nmap <silent> <leader>m :make<CR>
-nmap <C-F5> ,m
 
 " Remap Ctrl-k and Ctrl-j to jump to the previous and next compiler error
 " respectively.
 nmap <silent> <C-k> :cp<CR>
 nmap <silent> <C-j> :cn<CR>
 
+" Switch between header and implementation using F4.
+map <F4> :A<CR>
+
+" Easier escape (jj is so rarely typed this shouldn't be an issue)
+inoremap <silent> jj <ESC>
+vnoremap <silent> jj <ESC>
+
+" TFS checkout
+command! -nargs=0 TfCheckout !tf checkout "%"
+command! -nargs=0 TfUndo !tf undo "%"
+map <leader>tfc :TfCheckout<CR><enter>
+map <leader>tfu :TfUndo<CR><enter>
+
+" Movement
+noremap j gj
+noremap k gk
+
+nmap <S-k> kV
+vmap <S-k> <Up>
+nmap <S-j> V
+vmap <S-j> <Down>
+map <C-S-Home> v<Home>gg
+imap <C-S-Home> <Esc><C-S-Home>
+map <C-S-End> v<End>G
+imap <C-S-End> <Esc>l<C-S-End>
+
+nmap <S-h> v
+vmap <S-h> h
+nmap <S-l> vl
+vmap <S-l> l
+map <S-Home> v<Home>
+imap <S-Home> <Esc><S-Home>
+map <S-End> v<End>
+imap <S-End> <Esc>l<S-End>
 
 "-------------------------------------------------------------------------------
 " Search and grep
 "-------------------------------------------------------------------------------
 
-" Map ^ to grep word under cursor using Ack.
-nmap ^ :AckAsync<CR><CR>
-
-" This method is essentially a simplified version of the Ack plugin itself
-" that uses Vimux
-command! -bang -nargs=* -complete=file AckAsync call s:AckAsync(<q-args>)
-function! s:AckAsync(args)
-    if empty(a:args)
-        let g:grepargs = expand("<cword>")
-    else
-        let g:grepargs = a:args . join(a:000, ' ')
-    end
-
-    call VimuxRunCommand(g:ackprg . ' ' . escape(g:grepargs, '|') . " | tee /tmp/findresults; vim --servername " . v:servername . " --remote-send '<Esc>:set efm=%f:%l:%c:%m<CR>:cfile /tmp/findresults | cw<CR><CR>:call ChangeQuickfixTitle(printf(\"[Found: %s] grep %s\", len(getqflist()), g:grepargs))<CR>:call VimuxClosePanes()<CR>'")
-    "silent execute a:cmd . " " . escape(l:grepargs, '|')
-
-    if exists("g:ackhighlight")
-        let @/=a:args
-        set hlsearch
-    end
-
-endfunction
-
-fu! ChangeQuickfixTitle(title)
-    let b = bufnr("%")
-    execute ( -1 . "wincmd w")
-    let w:quickfix_title=a:title
-    execute ( bufwinnr(b) . "wincmd w")
-endf
+let g:ackhighlight=1
 
 " Use the silver searcher by default for the Ack plugin (we need a clean and
 " simple separate Ag plugin :P).
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+"if $TMUX != ''
+"    command! -bang -nargs=* -complete=file Find :AckAsync <args>
+"else
+"    command! -bang -nargs=* -complete=file Find :Ack <args>
+"endif
+
+" This method is essentially a simplified version of the Ack plugin itself
+" that uses Vimux
+"command! -bang -nargs=* -complete=file AckAsync call s:AckAsync(<q-args>)
+"function! s:AckAsync(args)
+"    if empty(a:args)
+"        let g:grepargs = expand("<cword>")
+"    else
+"        let g:grepargs = a:args . join(a:000, ' ')
+"    end
+
+"    call VimuxRunCommand(g:ackprg . ' ' . escape(g:grepargs, '|') . " | tee /tmp/findresults; vim --servername " . v:servername . " --remote-send '<Esc>:set efm=%f:%l:%c:%m<CR>:cfile /tmp/findresults | cw<CR><CR>:call ChangeQuickfixTitle(printf(\"[Found: %s] grep %s\", len(getqflist()), g:grepargs))<CR>:call VimuxClosePanes()<CR>'")
+"    "silent execute a:cmd . " " . escape(l:grepargs, '|')
+
+"    if exists("g:ackhighlight")
+"        let @/=a:args
+"        set hlsearch
+"    end
+
+"endfunction
+
+"fu! ChangeQuickfixTitle(title)
+"    let b = bufnr("%")
+"    execute ( -1 . "wincmd w")
+"    let oldtitle=w:quickfix_title
+"    let w:quickfix_title=a:title . oldtitle
+"    execute ( bufwinnr(b) . "wincmd w")
+"endf
+
+
 "-------------------------------------------------------------------------------
 " Configure plugins
 "-------------------------------------------------------------------------------
-
-" Load pathogen.
-filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
-" Enable plugin support based on filetypes.
-filetype on
-filetype plugin on
-filetype indent on
 
 " Configure Command-T plugin.
 function! CommandTOpenInCurrentTab()
@@ -263,9 +310,6 @@ nmap <silent> <leader>e :call CommandTOpenInCurrentTab()<CR>
 nmap <silent> <leader>r :CommandTFlush<CR>
 nmap <silent> <leader>b :CommandTBuffer<CR>
 
-" Switch between header and implementation using F4.
-map <F4> :A<CR>
-
 " Configure the search paths to look for include/source files, and never open a
 " non existing source file.
 let g:alternateSearchPath = 'sfr:../source,sfr:../src,sfr:../include,sfr:../inc,sfr:../itf'
@@ -287,20 +331,20 @@ let g:VimuxUseNearestPane = 1
 "-------------------------------------------------------------------------------
 set tag=./tags;/
 
-"function! OmniPopup(action)
-"    if pumvisible()
-"        if a:action == "down"
-"            return "\<C-N>"
-"        elseif a:action == "up"
-"            return "\<C-P>"
-"        endif
-"    endif
-"    return a:action
-"endfunction
+function! OmniPopup(action)
+    if pumvisible()
+        if a:action == "down"
+            return "\<C-N>"
+        elseif a:action == "up"
+            return "\<C-P>"
+        endif
+    endif
+    return a:action
+endfunction
 
 "" Remap Ctrl-j and Ctrl-k to move up and down in popup lists.
-"inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
-"inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
+inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
+inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
 
 "" Open the completion menu using C-Space, note that C-Space inserts the <Nul> character.
 inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
@@ -309,7 +353,7 @@ inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
 inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
 
 "" Enter should select the currently highlighted menu item.
-"inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 
 "" Configure (keyword) completion.
 set completeopt=longest,menuone
