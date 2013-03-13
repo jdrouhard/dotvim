@@ -3,4 +3,4 @@ set guiheadroom=-100
 set guioptions-=T
 set guioptions-=m
 set noerrorbells
-set guifont=Source\ Code\ Pro\ regular\ 9
+set guifont=Source\ Code\ Pro\ for\ PowerLine\ regular\ 9

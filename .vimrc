@@ -276,6 +276,12 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " Configure plugins
 "-------------------------------------------------------------------------------
 
+" Enable Powerline
+runtime bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
+
+set laststatus=2 " Always display the statusline in all windows
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the status line)
+
 " Configure Command-T plugin.
 function! CommandTOpenInCurrentTab()
     let g:CommandTAcceptSelectionMap = "<CR>"
