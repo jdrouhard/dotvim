@@ -2,6 +2,7 @@
 " Initialize pathogen
 "-------------------------------------------------------------------------------
 " Load pathogen.
+runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -14,6 +15,7 @@ filetype indent on
 "-------------------------------------------------------------------------------
 " Text formatting
 "-------------------------------------------------------------------------------
+set encoding=utf-8
 
 set autoindent                       " always set autoindenting on
 set expandtab                        " insert spaces when the tab key is pressed
@@ -97,7 +99,7 @@ set backup                           " enable backups
 set backupdir=$HOME/.vim/backup      " set the backup directory
 set undofile                         " enable persistent undo
 set undodir=$HOME/.vim/undo          " persistent undo directory
-set clipboard=unnamedplus            " use the system clipboard by default
+"set clipboard=unnamedplus            " use the system clipboard by default
 set dir=$HOME/.vim/swap              " set the swap directory
 set hidden                           " be able to put the current buffer to the
                                      " background without writing to disk and

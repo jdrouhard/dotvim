@@ -3,4 +3,8 @@ set guiheadroom=-100
 set guioptions-=T
 set guioptions-=m
 set noerrorbells
-set guifont=Source\ Code\ Pro\ for\ PowerLine\ regular\ 9
+if has("win16") || has("win32") || has("win64")
+    set guifont=Consolas:h9:cANSI
+else
+    set guifont=Source\ Code\ Pro\ for\ PowerLine\ regular\ 9
+endif
