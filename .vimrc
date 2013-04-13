@@ -31,12 +31,13 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-colorscheme molokai                  " set colorscheme for 256 color terminals
+set background=dark
+colorscheme solarized                  " set colorscheme for 256 color terminals
 
 "set term=$TERM
 set t_so=[7m                         " set escape codes for standout mode
 set t_ZH=[3m                         " set escape codes for italics mode
-set t_Co=256                         " force 256 colors by default
+"set t_Co=256                         " force 256 colors by default
 
 set backspace=indent,eol,start       " allow backspacing over everything in
                                      " insert mode
