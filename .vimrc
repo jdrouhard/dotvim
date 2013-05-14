@@ -4,7 +4,7 @@
 " Load pathogen.
 runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
-call pathogen#runtime_append_all_bundles()
+call pathogen#incubate()
 call pathogen#helptags()
 
 " Enable plugin support based on filetypes.
@@ -35,7 +35,8 @@ set wrap                             " wrap overlong lines
 "let g:solarized_visibility="low"
 let g:molokai_original = 0
 colorscheme molokai                  " set colorscheme for 256 color terminals
-"set background=dark
+set background=dark
+let g:rehash256=1
 
 "set term=$TERM
 set t_so=[7m                         " set escape codes for standout mode
