@@ -31,18 +31,19 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-"let g:solarized_termcolors=256
-"let g:solarized_visibility="low"
-let g:molokai_original = 0
-colorscheme molokai                  " set colorscheme for 256 color terminals
-set background=dark
-let g:rehash256=1
-
 "set term=$TERM
 set t_so=[7m                         " set escape codes for standout mode
 set t_ZH=[3m                         " set escape codes for italics mode
 set t_Co=256                         " force 256 colors by default
 "set t_Co=16
+
+"let g:solarized_termcolors=256
+"let g:solarized_visibility="low"
+let g:molokai_original = 0
+let g:rehash256=1
+set background=dark
+
+colorscheme molokai                  " set colorscheme for 256 color terminals
 
 set backspace=indent,eol,start       " allow backspacing over everything in
                                      " insert mode
