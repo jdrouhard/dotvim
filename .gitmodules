@@ -1,42 +1,42 @@
-[submodule "submodules/pathogen"]
-	path = submodules/pathogen
+[submodule "home/.vim/submodules/pathogen"]
+	path = home/.vim/submodules/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "bundle/a"]
-	path = bundle/a
+[submodule "home/.vim/bundle/a"]
+	path = home/.vim/bundle/a
 	url = https://github.com/vim-scripts/a.vim.git
-[submodule "bundle/vimux"]
-	path = bundle/vimux
+[submodule "home/.vim/bundle/vimux"]
+	path = home/.vim/bundle/vimux
 	url = https://github.com/benmills/vimux.git
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
+[submodule "home/.vim/bundle/nerdtree"]
+	path = home/.vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
+[submodule "home/.vim/bundle/nerdcommenter"]
+	path = home/.vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "bundle/ack"]
-	path = bundle/ack
+[submodule "home/.vim/bundle/ack"]
+	path = home/.vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "bundle/minibufexpl"]
-	path = bundle/minibufexpl
+[submodule "home/.vim/bundle/minibufexpl"]
+	path = home/.vim/bundle/minibufexpl
 	url = https://github.com/fholgado/minibufexpl.vim.git
-[submodule "bundle/omnicppcomplete"]
-	path = bundle/omnicppcomplete
+[submodule "home/.vim/bundle/omnicppcomplete"]
+	path = home/.vim/bundle/omnicppcomplete
 	url = https://github.com/vim-scripts/OmniCppComplete.git
-[submodule "bundle/supertab"]
-	path = bundle/supertab
+[submodule "home/.vim/bundle/supertab"]
+	path = home/.vim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
-[submodule "bundle/command-t"]
-	path = bundle/command-t
+[submodule "home/.vim/bundle/command-t"]
+	path = home/.vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
-[submodule "bundle/molokai"]
-	path = bundle/molokai
+[submodule "home/.vim/bundle/molokai"]
+	path = home/.vim/bundle/molokai
 	url = https://github.com/tomasr/molokai.git
-[submodule "bundle/tagbar"]
-	path = bundle/tagbar
+[submodule "home/.vim/bundle/tagbar"]
+	path = home/.vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "bundle/powerline"]
-	path = bundle/powerline
+[submodule "home/.vim/bundle/powerline"]
+	path = home/.vim/bundle/powerline
 	url = https://github.com/Lokaltog/powerline.git
-[submodule "bundle/vim-colors-solarized"]
-	path = bundle/vim-colors-solarized
+[submodule "home/.vim/bundle/vim-colors-solarized"]
+	path = home/.vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
