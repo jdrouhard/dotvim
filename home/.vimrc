@@ -409,7 +409,7 @@ au BufEnter *.vim setlocal tabstop=4
 au BufEnter *.vim setlocal shiftwidth=4
 
 " Strip trailing white spaces in source code.
-au BufWritePre .vimrc,*.js,*.cpp,*.hpp,*.php,*.h,*.c :call StripTrailingWhitespace()
+"au BufWritePre .vimrc,*.js,*.cpp,*.hpp,*.php,*.h,*.c :call StripTrailingWhitespace()
 
 " Do not expand tabs for web related source code.
 au BufEnter *.php,*.html,*.css,*.js setlocal noexpandtab
