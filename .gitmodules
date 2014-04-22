@@ -4,9 +4,6 @@
 [submodule "home/.vim/bundle/a"]
 	path = home/.vim/bundle/a
 	url = https://github.com/vim-scripts/a.vim.git
-[submodule "home/.vim/bundle/vimux"]
-	path = home/.vim/bundle/vimux
-	url = https://github.com/benmills/vimux.git
 [submodule "home/.vim/bundle/nerdtree"]
 	path = home/.vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
@@ -52,3 +49,6 @@
 [submodule "home/.vim/bundle/html5"]
 	path = home/.vim/bundle/html5
 	url = https://github.com/othree/html5.vim.git
+[submodule "home/.vim/bundle/vim-dispatch"]
+	path = home/.vim/bundle/vim-dispatch
+	url = git://github.com/tpope/vim-dispatch.git
