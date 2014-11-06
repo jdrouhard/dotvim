@@ -117,7 +117,7 @@ set history=50                       " keep 50 lines of command line history
                                      " printing
 set nostartofline                    " do not change the X position of the
                                      " cursor when paging up and down
-set mouse=a
+"set mouse=a
 
 "-------------------------------------------------------------------------------
 " Key remappings
@@ -128,10 +128,6 @@ let mapleader=","                    " set our personal modifier key to ','
 "set pastetoggle=<F2>                 " F2 temporarily disables formatting when
                                      " pasting text
 
-" Map Ctrl-BackSpace to delete the previous word. Since URxvt maps
-" Ctrl-BackSpace to ^[^?, we need to specify that key combination here as well.
-imap <C-BS> <C-W>
-
 " Quickly edit and reload the vimrc file.
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
@@ -139,10 +135,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " Map Y to copy to the end of the line (which is more logical, also according
 " to the Vim manual.
 map Y y$
-
-" Remap Ctrl-s to save the current file.
-map <silent> <C-s> :w<CR>
-imap <silent> <C-s> <Esc>:w<CR>a
 
 vnoremap < <gv
 vnoremap > >gv
@@ -208,15 +200,9 @@ map <F4> :A<CR>
 inoremap <silent> jj <ESC>
 vnoremap <silent> jj <ESC>
 
-" TFS checkout
-command! -nargs=0 TfCheckout !tf checkout "%"
-command! -nargs=0 TfUndo !tf undo "%"
-map <leader>tfc :TfCheckout<CR><enter>
-map <leader>tfu :TfUndo<CR><enter>
-
 " Movement
-noremap j gj
-noremap k gk
+nnoremap j gj
+nnoremap k gk
 
 nmap <S-k> kV
 vmap <S-k> <Up>
@@ -244,41 +230,14 @@ let g:ackhighlight=1
 
 " Use the silver searcher by default for the Ack plugin (we need a clean and
 " simple separate Ag plugin :P).
+"
+" TODO: consider removing the Ack plugin entirely in favor of dispatch
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-"if $TMUX != ''
-"    command! -bang -nargs=* -complete=file Find :AckAsync <args>
-"else
-"    command! -bang -nargs=* -complete=file Find :Ack <args>
-"endif
-
-" This method is essentially a simplified version of the Ack plugin itself
-" that uses Vimux
-"command! -bang -nargs=* -complete=file AckAsync call s:AckAsync(<q-args>)
-"function! s:AckAsync(args)
-"    if empty(a:args)
-"        let g:grepargs = expand("<cword>")
-"    else
-"        let g:grepargs = a:args . join(a:000, ' ')
-"    end
-
-"    call VimuxRunCommand(g:ackprg . ' ' . escape(g:grepargs, '|') . " | tee /tmp/findresults; vim --servername " . v:servername . " --remote-send '<Esc>:set efm=%f:%l:%c:%m<CR>:cfile /tmp/findresults | cw<CR><CR>:call ChangeQuickfixTitle(printf(\"[Found: %s] grep %s\", len(getqflist()), g:grepargs))<CR>:call VimuxClosePanes()<CR>'")
-"    "silent execute a:cmd . " " . escape(l:grepargs, '|')
-
-"    if exists("g:ackhighlight")
-"        let @/=a:args
-"        set hlsearch
-"    end
-
-"endfunction
-
-"fu! ChangeQuickfixTitle(title)
-"    let b = bufnr("%")
-"    execute ( -1 . "wincmd w")
-"    let oldtitle=w:quickfix_title
-"    let w:quickfix_title=a:title . oldtitle
-"    execute ( bufwinnr(b) . "wincmd w")
-"endf
+command! -nargs=* Search call Search(<f-args>)
+function! Search(...)
+    execute "Dispatch ag --nogroup --nocolor --column " . join(a:000, ' ')
+endfunction
 
 
 "-------------------------------------------------------------------------------
@@ -302,7 +261,7 @@ endfunction
 highlight default link CommandTCharMatched Question
 
 " Increase the max number of files Command-T caches
-let g:CommandTMaxFiles=30000
+let g:CommandTMaxFiles=500000
 let g:CommandTMaxDepth=5
 
 let g:CommandTMaxCachedDirectories=0
@@ -311,7 +270,7 @@ let g:CommandTMaxCachedDirectories=0
 " Show the Command-T popup at the top of the screen with a maximum height of 20
 " lines.
 let g:CommandTMatchWindowReverse = 1
-let g:CommandTMaxHeight = 10
+let g:CommandTMaxHeight = 30
 
 " Use Escape to dismiss the Command-T popup menu.
 let g:CommandTCancelMap = '<ESC>'
