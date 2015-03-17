@@ -197,8 +197,8 @@ nmap <silent> <C-j> :cn<CR>
 map <F4> :A<CR>
 
 " Easier escape (jj is so rarely typed this shouldn't be an issue)
-inoremap <silent> jj <ESC>
-vnoremap <silent> jj <ESC>
+inoremap jj <ESC>
+vnoremap jj <ESC>
 
 " Movement
 nnoremap j gj
