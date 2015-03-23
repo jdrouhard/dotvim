@@ -45,17 +45,17 @@ endfunction
     "return
 "endif
 
-"noremap <silent> <special> b :exe "Cbreak ".fnameescape(expand("%:p")).":".line(".")<CR>
-"noremap <silent> <special> B :exe "Cclear ".fnameescape(expand("%:p")).":".line(".")<CR>
-"noremap <silent> <special> c :Ccontinue<CR>
-"noremap <silent> <special> f :Cfinish<CR>
+"noremap <silent> <special> <F9> :exe "Cbreak ".fnameescape(expand("%:p")).":".line(".")<CR>
+"noremap <silent> <special> <S-F9> :exe "Cclear ".fnameescape(expand("%:p")).":".line(".")<CR>
+"noremap <silent> <special> <F8> :Ccontinue<CR>
+"noremap <silent> <special> <S-F11> :Cfinish<CR>
 "" Mnemonic: goto
-"noremap <silent> <special> G :exe "Cuntil ".fnameescape(expand("%:p")).":".line(".")<CR>
+"noremap <silent> <special> <C-F10> :exe "Cuntil ".fnameescape(expand("%:p")).":".line(".")<CR>
 "" Mnemonic: main
 "noremap <silent> <special> m :Cstart<CR>
-"noremap <silent> <special> r :Crun<CR>
-"noremap <silent> <special> s :Cnext<CR>
-"noremap <silent> <special> S :Cstep<CR>
+"noremap <silent> <special> <F5> :Crun<CR>
+"noremap <silent> <special> <F10> :Cnext<CR>
+"noremap <silent> <special> <F11> :Cstep<CR>
 "noremap <silent> <special> <up> :Cup<CR>
 "noremap <silent> <special> <down> :Cdown<CR>
 

@@ -368,7 +368,7 @@ au BufEnter *.vim setlocal tabstop=4
 au BufEnter *.vim setlocal shiftwidth=4
 
 " Strip trailing white spaces in source code.
-"au BufWritePre .vimrc,*.js,*.cpp,*.hpp,*.php,*.h,*.c :call StripTrailingWhitespace()
+au BufWritePre .vimrc,*.js,*.cpp,*.hpp,*.php,*.h,*.c :call StripTrailingWhitespace()
 
 " Do not expand tabs for web related source code.
 au BufEnter *.php,*.html,*.css,*.js setlocal noexpandtab
@@ -393,6 +393,8 @@ au BufEnter *.rst setlocal textwidth=80
 " Set text width for Python to 80 to allow for proper docstring and comment formatting.
 au FileType python setlocal textwidth=80
 au FileType python setlocal formatoptions=croqn
+
+au BufEnter *.gradle setlocal filetype=groovy
 
 "-------------------------------------------------------------------------------
 " Misc settings
