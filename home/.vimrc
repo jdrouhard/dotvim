@@ -225,20 +225,10 @@ imap <S-End> <Esc>l<S-End>
 "-------------------------------------------------------------------------------
 " Search and grep
 "-------------------------------------------------------------------------------
-
-let g:ackhighlight=1
-
-" Use the silver searcher by default for the Ack plugin (we need a clean and
-" simple separate Ag plugin :P).
-"
-" TODO: consider removing the Ack plugin entirely in favor of dispatch
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
 command! -nargs=* Search call Search(<f-args>)
 function! Search(...)
     execute "Dispatch ag --nogroup --nocolor --column " . join(a:000, ' ')
 endfunction
-
 
 "-------------------------------------------------------------------------------
 " Configure plugins

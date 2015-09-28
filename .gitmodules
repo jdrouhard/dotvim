@@ -10,18 +10,9 @@
 [submodule "home/.vim/bundle/nerdcommenter"]
 	path = home/.vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "home/.vim/bundle/ack"]
-	path = home/.vim/bundle/ack
-	url = https://github.com/mileszs/ack.vim.git
 [submodule "home/.vim/bundle/minibufexpl"]
 	path = home/.vim/bundle/minibufexpl
 	url = https://github.com/fholgado/minibufexpl.vim.git
-[submodule "home/.vim/bundle/omnicppcomplete"]
-	path = home/.vim/bundle/omnicppcomplete
-	url = https://github.com/vim-scripts/OmniCppComplete.git
-[submodule "home/.vim/bundle/supertab"]
-	path = home/.vim/bundle/supertab
-	url = https://github.com/ervandew/supertab.git
 [submodule "home/.vim/bundle/command-t"]
 	path = home/.vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
@@ -55,3 +46,9 @@
 [submodule "home/.vim/bundle/vim-fugitive"]
 	path = home/.vim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "home/.vim/bundle/Conque-GDB"]
+	path = home/.vim/bundle/Conque-GDB
+	url = https://github.com/vim-scripts/Conque-GDB.git
+[submodule "home/.vim/bundle/YouCompleteMe"]
+	path = home/.vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
