@@ -4,8 +4,8 @@
 " Load pathogen.
 runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
-call pathogen#incubate()
-call pathogen#helptags()
+execute pathogen#infect()
+execute pathogen#helptags()
 
 " Enable plugin support based on filetypes.
 filetype on
