@@ -290,6 +290,14 @@ let g:yankring_n_keys = 'D x X'
 let g:VimuxHeight = "15"
 let g:VimuxUseNearestPane = 1
 
+" Configure YouCompleteMe
+"let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_filepath_completion_use_working_dir = 1
+let g:ycm_confirm_extra_conf =0
+
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+
 "-------------------------------------------------------------------------------
 " Configure (keyword) completion
 "-------------------------------------------------------------------------------
@@ -307,11 +315,11 @@ function! OmniPopup(action)
 endfunction
 
 "" Remap Ctrl-j and Ctrl-k to move up and down in popup lists.
-inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
-inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
+"inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
+"inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
 
 "" Open the completion menu using C-Space, note that C-Space inserts the <Nul> character.
-inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
+"inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
 
 "" Escape should always close the completion menu at once.
 inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
@@ -323,7 +331,7 @@ inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 set completeopt=longest,menuone
 
 "" Do not scan Boost include files.
-set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
+"set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
 
 "-------------------------------------------------------------------------------
 " File type specific settings
@@ -350,8 +358,8 @@ au BufEnter *.ui setlocal shiftwidth=1
 au BufEnter CMakeLists.txt setlocal tabstop=2
 au BufEnter CMakeLists.txt setlocal shiftwidth=2
 
-au BufEnter *.xml,*.inaml,*.inamltypes setlocal tabstop=2
-au BufEnter *.xml,*.inaml,*.inamltypes setlocal shiftwidth=2
+au BufEnter *.xml setlocal tabstop=2
+au BufEnter *.xml setlocal shiftwidth=2
 
 " Set tab stop to 4 for Vimscript files.
 au BufEnter *.vim setlocal tabstop=4
@@ -385,6 +393,8 @@ au FileType python setlocal textwidth=80
 au FileType python setlocal formatoptions=croqn
 
 au BufEnter *.gradle setlocal filetype=groovy
+
+au BufEnter *.sqli setlocal filetype=sql
 
 "-------------------------------------------------------------------------------
 " Misc settings
