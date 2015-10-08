@@ -31,19 +31,20 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-"set term=$TERM
-set t_so=[7m                         " set escape codes for standout mode
-set t_ZH=[3m                         " set escape codes for italics mode
-set t_Co=256                         " force 256 colors by default
-"set t_Co=16
+set term=$TERM
+set t_so=[7m                         " set escape codes for standout mode
+set t_ZH=[3m                         " set escape codes for italics mode
+set t_ZR=[23m                        " set escape codes for italics mode
 
-"let g:solarized_termcolors=256
-"let g:solarized_visibility="low"
-let g:molokai_original = 0
-let g:rehash256=1
+"set t_Co=256                         " force 256 colors by default
+"let g:molokai_original = 0
+"let g:rehash256=1
+"colorscheme molokai                  " set colorscheme for 256 color terminals
+
+set t_Co=16
 set background=dark
-
-colorscheme molokai                  " set colorscheme for 256 color terminals
+let g:solarized_visibility="low"
+colorscheme solarized
 
 set backspace=indent,eol,start       " allow backspacing over everything in
                                      " insert mode
@@ -54,21 +55,25 @@ set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
 set cursorline                       " highlight current line
 
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 " Enable Doxygen syntax highlighting.
 let g:load_doxygen_syntax=1
 let g:doxygen_javadoc_autobrief=0
 
 " Use custom colors for Doxygen syntax highlighting.
-highlight link doxygenSpecialOneLineDesc Comment
+"highlight link doxygenSpecialOneLineDesc Comment
 
-highlight SpecialComment cterm=NONE ctermfg=240
-highlight link doxygenSpecial SpecialComment
-highlight link doxygenBOther SpecialComment
-highlight link doxygenSmallSpecial SpecialComment
+"highlight SpecialComment cterm=NONE ctermfg=240
+"highlight link doxygenSpecial SpecialComment
+"highlight link doxygenBOther SpecialComment
+"highlight link doxygenSmallSpecial SpecialComment
 
-highlight doxygenParamName cterm=bold ctermfg=249
-highlight link doxygenArgumentWord doxygenParamName
-highlight link doxygenCodeWord doxygenParamName
+"highlight doxygenParamName cterm=bold ctermfg=249
+"highlight link doxygenArgumentWord doxygenParamName
+"highlight link doxygenCodeWord doxygenParamName
 
 syntax on                            " enable syntax highlighting
 
@@ -226,6 +231,7 @@ imap <S-End> <Esc>l<S-End>
 " Search and grep
 "-------------------------------------------------------------------------------
 command! -nargs=* Search call Search(<f-args>)
+command! -nargs=* Ag call Search(<f-args>)
 function! Search(...)
     execute "Dispatch ag --nogroup --nocolor --column " . join(a:000, ' ')
 endfunction
@@ -279,24 +285,13 @@ nmap <silent> <leader>b :CommandTBuffer<CR>
 let g:alternateSearchPath = 'sfr:../source,sfr:../src,sfr:../include,sfr:../inc,sfr:../itf'
 let g:alternateNoDefaultAlternate = 1
 
-" Configure the YankRing plugin. Note that we remove Y from the list of
-" YankRing keys for normal mode to make sure that the remap for Y from earlier
-" actually works.
-let g:yankring_history_dir = expand('$HOME/.vim/')
-let g:yankring_n_keys = 'D x X'
-
-" Configure the height of the Vimux split pane as a percentage of the total
-" screen height.
-let g:VimuxHeight = "15"
-let g:VimuxUseNearestPane = 1
-
 " Configure YouCompleteMe
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_confirm_extra_conf =0
 
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 
 "-------------------------------------------------------------------------------
 " Configure (keyword) completion
@@ -366,7 +361,8 @@ au BufEnter *.vim setlocal tabstop=4
 au BufEnter *.vim setlocal shiftwidth=4
 
 " Strip trailing white spaces in source code.
-au BufWritePre .vimrc,*.js,*.cpp,*.hpp,*.php,*.h,*.c :call StripTrailingWhitespace()
+"au BufWritePre *.cpp,*.hpp,*.h,*.c :call StripTrailingWhitespace()
+au BufWritePre .vimrc,*.js,*.php :call StripTrailingWhitespace()
 
 " Do not expand tabs for web related source code.
 au BufEnter *.php,*.html,*.css,*.js setlocal noexpandtab
@@ -395,6 +391,8 @@ au FileType python setlocal formatoptions=croqn
 au BufEnter *.gradle setlocal filetype=groovy
 
 au BufEnter *.sqli setlocal filetype=sql
+
+au FileType mail setlocal fo+=aw
 
 "-------------------------------------------------------------------------------
 " Misc settings
