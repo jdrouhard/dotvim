@@ -36,16 +36,21 @@ set t_so=[7m                         " set escape codes for standout mode
 set t_ZH=[3m                         " set escape codes for italics mode
 set t_ZR=[23m                        " set escape codes for italics mode
 
+" Molokai settings
 "set t_Co=256                         " force 256 colors by default
 "let g:molokai_original = 0
 "let g:rehash256=1
 "colorscheme molokai                  " set colorscheme for 256 color terminals
 
+" Solarized settings
 set t_Co=16
 set background=dark
 "let g:solarized_visibility="low"
+"let g:solarized_termtrans=1
 let g:solarized_bold=0
+highlight! link YcmErrorSection ErrorMsg
 colorscheme solarized
+call togglebg#map("<F6>")
 
 set backspace=indent,eol,start       " allow backspacing over everything in
                                      " insert mode
@@ -56,10 +61,6 @@ set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
 set cursorline                       " highlight current line
 set modeline                         " enable modeline identifiers in files
-
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Enable Doxygen syntax highlighting.
 let g:load_doxygen_syntax=1
@@ -291,10 +292,9 @@ let g:alternateNoDefaultAlternate = 1
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_confirm_extra_conf =0
-highlight link YcmErrorSection ErrorMsg
 
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
-nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 "-------------------------------------------------------------------------------
 " Configure (keyword) completion
@@ -323,7 +323,7 @@ endfunction
 inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
 
 "" Enter should select the currently highlighted menu item.
-inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+"inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 
 "" Configure (keyword) completion.
 set completeopt=longest,menuone
