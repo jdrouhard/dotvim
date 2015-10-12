@@ -43,7 +43,8 @@ set t_ZR=[23m                        " set escape codes for italics mode
 
 set t_Co=16
 set background=dark
-let g:solarized_visibility="low"
+"let g:solarized_visibility="low"
+let g:solarized_bold=0
 colorscheme solarized
 
 set backspace=indent,eol,start       " allow backspacing over everything in
@@ -54,6 +55,7 @@ set numberwidth=5                    " we are good for up to 99999 lines
 set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
 set cursorline                       " highlight current line
+set modeline                         " enable modeline identifiers in files
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
@@ -289,6 +291,7 @@ let g:alternateNoDefaultAlternate = 1
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_confirm_extra_conf =0
+highlight link YcmErrorSection ErrorMsg
 
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>

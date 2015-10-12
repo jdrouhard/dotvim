@@ -10,3 +10,5 @@ if has("win16") || has("win32") || has("win64")
 else
     set guifont=Source\ Code\ Pro\ for\ PowerLine\ regular\ 10
 endif
+
+let g:solarized_bold=1
