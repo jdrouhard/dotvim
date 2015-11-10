@@ -43,14 +43,14 @@ set t_ZR=[23m                        " set escape codes for italics mode
 "colorscheme molokai                  " set colorscheme for 256 color terminals
 
 " Solarized settings
-set t_Co=16
+"set t_Co=16
 set background=dark
 "let g:solarized_visibility="low"
-"let g:solarized_termtrans=1
+let g:solarized_termtrans=1
 let g:solarized_bold=0
-highlight! link YcmErrorSection ErrorMsg
+highlight link YcmErrorSection ErrorMsg
 colorscheme solarized
-call togglebg#map("<F6>")
+"call togglebg#map("<F6>")
 
 set backspace=indent,eol,start       " allow backspacing over everything in
                                      " insert mode
@@ -126,6 +126,7 @@ set history=50                       " keep 50 lines of command line history
 set nostartofline                    " do not change the X position of the
                                      " cursor when paging up and down
 "set mouse=a
+set wildignore+=*.o,*.obj
 
 "-------------------------------------------------------------------------------
 " Key remappings
@@ -233,10 +234,14 @@ imap <S-End> <Esc>l<S-End>
 "-------------------------------------------------------------------------------
 " Search and grep
 "-------------------------------------------------------------------------------
+if !exists('g:agprg')
+    let g:agprg = 'Dispatch ag --nogroup --nocolor --column'
+endif
+
 command! -nargs=* Search call Search(<f-args>)
 command! -nargs=* Ag call Search(<f-args>)
 function! Search(...)
-    execute "Dispatch ag --nogroup --nocolor --column " . join(a:000, ' ')
+    execute g:agprg . ' ' . join(a:000, ' ')
 endfunction
 
 "-------------------------------------------------------------------------------
