@@ -43,7 +43,7 @@ set t_ZR=[23m                        " set escape codes for italics mode
 "colorscheme molokai                  " set colorscheme for 256 color terminals
 
 " Solarized settings
-"set t_Co=16
+set t_Co=16
 set background=dark
 "let g:solarized_visibility="low"
 let g:solarized_termtrans=1
@@ -249,7 +249,14 @@ endfunction
 "-------------------------------------------------------------------------------
 
 " Enable Powerline
-runtime bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
+"runtime bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the status line)

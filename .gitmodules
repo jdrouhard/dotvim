@@ -10,9 +10,6 @@
 [submodule "home/.vim/bundle/nerdcommenter"]
 	path = home/.vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "home/.vim/bundle/minibufexpl"]
-	path = home/.vim/bundle/minibufexpl
-	url = https://github.com/fholgado/minibufexpl.vim.git
 [submodule "home/.vim/bundle/command-t"]
 	path = home/.vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
@@ -22,9 +19,6 @@
 [submodule "home/.vim/bundle/tagbar"]
 	path = home/.vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "home/.vim/bundle/powerline"]
-	path = home/.vim/bundle/powerline
-	url = https://github.com/Lokaltog/powerline.git
 [submodule "home/.vim/bundle/vim-colors-solarized"]
 	path = home/.vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
@@ -52,3 +46,6 @@
 [submodule "home/.vim/bundle/ListToggle"]
 	path = home/.vim/bundle/ListToggle
 	url = https://github.com/Valloric/ListToggle.git
+[submodule "home/.vim/bundle/vim-airline"]
+	path = home/.vim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline.git
