@@ -255,12 +255,6 @@ set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the status line)
 
 " Configure Command-T plugin.
-function! CommandTOpenInCurrentTab()
-    let g:CommandTAcceptSelectionMap = "<CR>"
-    let g:CommandTAcceptSelectionTabMap = ""
-    exe "CommandT"
-endfunction
-
 " Improve highlighting of matching characters in Command-T's popup window.
 highlight default link CommandTCharMatched Question
 
@@ -282,11 +276,7 @@ let g:CommandTCancelMap = '<ESC>'
 " Use MRU ordering for buffer list in Command-T.
 let g:CommandTUseMruBufferOrder = 1
 
-" Use <leader>e to open the Command-T popup menu, and <leader>r to refresh the
-" Command-T cached.
-nmap <silent> <leader>e :call CommandTOpenInCurrentTab()<CR>
 nmap <silent> <leader>r :CommandTFlush<CR>
-nmap <silent> <leader>b :CommandTBuffer<CR>
 
 " Configure the search paths to look for include/source files, and never open a
 " non existing source file.
