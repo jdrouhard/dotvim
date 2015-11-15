@@ -107,6 +107,7 @@ set smartcase                        " ignore case if search pattern is all
 set visualbell                       " only show a visual cue when an error
                                      " occurs
 set laststatus=2                     " always show the status line
+set showtabline=2
 
 "-------------------------------------------------------------------------------
 " Behavioural settings
