@@ -10,9 +10,6 @@
 [submodule "home/.vim/bundle/nerdcommenter"]
 	path = home/.vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "home/.vim/bundle/minibufexpl"]
-	path = home/.vim/bundle/minibufexpl
-	url = https://github.com/fholgado/minibufexpl.vim.git
 [submodule "home/.vim/bundle/command-t"]
 	path = home/.vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
@@ -52,3 +49,6 @@
 [submodule "home/.vim/bundle/ListToggle"]
 	path = home/.vim/bundle/ListToggle
 	url = https://github.com/Valloric/ListToggle.git
+[submodule "home/.vim/bundle/vim-polyglot"]
+	path = home/.vim/bundle/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot.git

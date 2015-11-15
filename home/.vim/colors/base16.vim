@@ -135,26 +135,28 @@
 " environment.
 
 " Terminals that support italics
-let s:terms_italic=[
-            \"rxvt",
-            \"gnome-terminal"
-            \]
-" For reference only, terminals are known to be incomptible.
-" Terminals that are in neither list need to be tested.
-let s:terms_noitalic=[
-            \"iTerm.app",
-            \"Apple_Terminal"
-            \]
-if has("gui_running")
-    let s:terminal_italic=1 " TODO: could refactor to not require this at all
-else
-    let s:terminal_italic=0 " terminals will be guilty until proven compatible
-    for term in s:terms_italic
-        if $TERM_PROGRAM =~ term
-            let s:terminal_italic=1
-        endif
-    endfor
-endif
+"let s:terms_italic=[
+"            \"rxvt",
+"            \"gnome-terminal"
+"            \]
+"" For reference only, terminals are known to be incomptible.
+"" Terminals that are in neither list need to be tested.
+"let s:terms_noitalic=[
+"            \"iTerm.app",
+"            \"Apple_Terminal"
+"            \]
+"if has("gui_running")
+"    let s:terminal_italic=1 " TODO: could refactor to not require this at all
+"else
+"    let s:terminal_italic=0 " terminals will be guilty until proven compatible
+"    for term in s:terms_italic
+"        if $TERM_PROGRAM =~ term
+"            let s:terminal_italic=1
+"        endif
+"    endfor
+"endif
+
+let s:terminal_italic=1
 
 " }}}
 " Default option values"{{{
@@ -309,8 +311,8 @@ elseif g:base16_termcolors != 256 && &t_Co >= 16
     let s:yellow      = "3"
     let s:orange      = "16"
     let s:red         = "1"
-    let s:magenta     = "5"
-    let s:violet      = "13"
+    let s:magenta     = "17"
+    let s:violet      = "5"
     let s:blue        = "4"
     let s:cyan        = "6"
     let s:green       = "2"
