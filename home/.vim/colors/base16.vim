@@ -1073,18 +1073,18 @@ function! Base16Menu()
         amenu &Base16.&Background.&Help:\ ToggleBG     :help togglebg<CR>
 
         if g:base16_bold==0 | let l:boldswitch="On" | else | let l:boldswitch="Off" | endif
-        exe "amenu &base16.&Styling.&Turn\\ Bold\\ ".l:boldswitch." :let g:base16_bold=(abs(g:base16_bold-1)) \\| colorscheme base16<CR>"
+        exe "amenu &Base16.&Styling.&Turn\\ Bold\\ ".l:boldswitch." :let g:base16_bold=(abs(g:base16_bold-1)) \\| colorscheme base16<CR>"
         if g:base16_italic==0 | let l:italicswitch="On" | else | let l:italicswitch="Off" | endif
-        exe "amenu &base16.&Styling.&Turn\\ Italic\\ ".l:italicswitch." :let g:base16_italic=(abs(g:base16_italic-1)) \\| colorscheme base16<CR>"
+        exe "amenu &Base16.&Styling.&Turn\\ Italic\\ ".l:italicswitch." :let g:base16_italic=(abs(g:base16_italic-1)) \\| colorscheme base16<CR>"
         if g:base16_underline==0 | let l:underlineswitch="On" | else | let l:underlineswitch="Off" | endif
-        exe "amenu &base16.&Styling.&Turn\\ Underline\\ ".l:underlineswitch." :let g:base16_underline=(abs(g:base16_underline-1)) \\| colorscheme base16<CR>"
+        exe "amenu &Base16.&Styling.&Turn\\ Underline\\ ".l:underlineswitch." :let g:base16_underline=(abs(g:base16_underline-1)) \\| colorscheme base16<CR>"
 
         amenu &Base16.&Diff\ Mode.&Low\ Diff\ Mode    :let g:base16_diffmode="low"     \| colorscheme base16<CR>
         amenu &Base16.&Diff\ Mode.&Normal\ Diff\ Mode :let g:base16_diffmode="normal"  \| colorscheme base16<CR>
         amenu &Base16.&Diff\ Mode.&High\ Diff\ Mode   :let g:base16_diffmode="high"    \| colorscheme base16<CR>
 
         if g:base16_hitrail==0 | let l:hitrailswitch="On" | else | let l:hitrailswitch="Off" | endif
-        exe "amenu &base16.&Experimental.&Turn\\ Highlight\\ Trailing\\ Spaces\\ ".l:hitrailswitch." :let g:base16_hitrail=(abs(g:base16_hitrail-1)) \\| colorscheme base16<CR>"
+        exe "amenu &Base16.&Experimental.&Turn\\ Highlight\\ Trailing\\ Spaces\\ ".l:hitrailswitch." :let g:base16_hitrail=(abs(g:base16_hitrail-1)) \\| colorscheme base16<CR>"
         an    &Base16.&Experimental.-sep-               <Nop>
         amenu &Base16.&Experimental.&Help:\ HiTrail    :help 'base16_hitrail'<CR>
 

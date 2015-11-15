@@ -4,6 +4,12 @@
 " Load pathogen.
 runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
+
+let g:pathogen_disabled = []
+if has("win16") || has("win32") || has("win64")
+    call add(g:pathogen_disabled, 'YouCompleteMe')
+endif
+
 execute pathogen#infect()
 execute pathogen#helptags()
 
@@ -31,7 +37,6 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-set term=$TERM
 set t_so=[7m                         " set escape codes for standout mode
 set t_ZH=[3m                         " set escape codes for italics mode
 set t_ZR=[23m                        " set escape codes for italics mode
@@ -291,7 +296,7 @@ let g:alternateNoDefaultAlternate = 1
 " Configure YouCompleteMe
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_confirm_extra_conf =0
+let g:ycm_confirm_extra_conf = 0
 
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
