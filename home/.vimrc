@@ -5,7 +5,7 @@
 runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
 
-let g:pathogen_disabled = []
+let g:pathogen_disabled = ['tagbar'] " TODO: investigate slowness of large files
 if has("win16") || has("win32") || has("win64")
     call add(g:pathogen_disabled, 'YouCompleteMe')
 endif
@@ -66,9 +66,9 @@ set backspace=indent,eol,start       " allow backspacing over everything in
 set nofoldenable                     " disable code folding by default
 set number                           " always show line numbers
 set numberwidth=5                    " we are good for up to 99999 lines
-set ruler                            " show the cursor position all the time
+"set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
-set cursorline                       " highlight current line
+"set cursorline                       " highlight current line
 set modeline                         " enable modeline identifiers in files
 
 " Enable Doxygen syntax highlighting.
@@ -217,25 +217,25 @@ map <F4> :A<CR>
 
 " Easier escape (jj is so rarely typed this shouldn't be an issue)
 inoremap jj <ESC>
-vnoremap jj <ESC>
+"vnoremap jj <ESC>
 
 " Movement
 nnoremap j gj
 nnoremap k gk
 
-nmap <S-k> kV
-vmap <S-k> <Up>
-nmap <S-j> V
-vmap <S-j> <Down>
+"nmap <S-k> kV
+"vmap <S-k> <Up>
+"nmap <S-j> V
+"vmap <S-j> <Down>
 map <C-S-Home> v<Home>gg
 imap <C-S-Home> <Esc><C-S-Home>
 map <C-S-End> v<End>G
 imap <C-S-End> <Esc>l<C-S-End>
 
-nmap <S-h> v
-vmap <S-h> h
-nmap <S-l> vl
-vmap <S-l> l
+"nmap <S-h> v
+"vmap <S-h> h
+"nmap <S-l> vl
+"vmap <S-l> l
 map <S-Home> v<Home>
 imap <S-Home> <Esc><S-Home>
 map <S-End> v<End>
@@ -347,60 +347,65 @@ function! StripTrailingWhitespace()
     normal `Z
 endfunction
 
-" Syntax highlighting for Qt qmake project files.
-"au BufEnter *.pro setlocal syntax=pro
+augroup vimrc_autocmd
+    autocmd!
+    " Syntax highlighting for Qt qmake project files.
+    "au BufEnter *.pro setlocal syntax=pro
 
-" Syntax highlighting for Go.
-"au BufEnter *.go setlocal syntax=go
+    " Syntax highlighting for Go.
+    "au BufEnter *.go setlocal syntax=go
 
-" Set tab stop to 1 for Qt UI definition files.
-au BufEnter *.ui setlocal tabstop=1
-au BufEnter *.ui setlocal shiftwidth=1
+    " Set tab stop to 1 for Qt UI definition files.
+    au BufEnter *.ui setlocal tabstop=1
+    au BufEnter *.ui setlocal shiftwidth=1
 
-" Set tab stop to 1 for CMake files.
-au BufEnter CMakeLists.txt setlocal tabstop=2
-au BufEnter CMakeLists.txt setlocal shiftwidth=2
+    " Set tab stop to 1 for CMake files.
+    au BufEnter CMakeLists.txt setlocal tabstop=2
+    au BufEnter CMakeLists.txt setlocal shiftwidth=2
+    au BufEnter *.cmake setlocal tabstop=2
+    au BufEnter *.cmake setlocal shiftwidth=2
 
-au BufEnter *.xml setlocal tabstop=2
-au BufEnter *.xml setlocal shiftwidth=2
+    au BufEnter *.xml setlocal tabstop=2
+    au BufEnter *.xml setlocal shiftwidth=2
 
-" Set tab stop to 4 for Vimscript files.
-au BufEnter *.vim setlocal tabstop=4
-au BufEnter *.vim setlocal shiftwidth=4
+    " Set tab stop to 4 for Vimscript files.
+    au BufEnter *.vim setlocal tabstop=4
+    au BufEnter *.vim setlocal shiftwidth=4
 
-" Strip trailing white spaces in source code.
-"au BufWritePre *.cpp,*.hpp,*.h,*.c :call StripTrailingWhitespace()
-au BufWritePre .vimrc,*.js,*.php :call StripTrailingWhitespace()
+    " Strip trailing white spaces in source code.
+    "au BufWritePre *.cpp,*.hpp,*.h,*.c :call StripTrailingWhitespace()
+    au BufWritePre .vimrc,*.js,*.php :call StripTrailingWhitespace()
 
-" Do not expand tabs for web related source code.
-au BufEnter *.php,*.html,*.css,*.js setlocal noexpandtab
+    " Do not expand tabs for web related source code.
+    au BufEnter *.php,*.html,*.css,*.js setlocal noexpandtab
 
-" Set text width for C++ code to be able to easily format comments.
-au FileType cpp setlocal textwidth=80
-au FileType cpp setlocal formatoptions=croqn
+    " Set text width for C++ code to be able to easily format comments.
+    au FileType cpp setlocal textwidth=80
+    au FileType cpp setlocal formatoptions=croqn
 
-" Add support for Doxygen comment leader.
-au FileType h,hpp,cpp,c setlocal comments^=:///
+    " Add support for Doxygen comment leader.
+    au FileType h,hpp,cpp,c setlocal comments^=:///
 
-" Set text width for Git commit messages.
-au BufEnter .git/COMMIT_EDITMSG setlocal textwidth=72
+    " Set text width for Git commit messages.
+    au BufEnter .git/COMMIT_EDITMSG setlocal textwidth=72
 
-" Set text width for Changelogs, and do not expand tabs.
-au BufEnter Changelog setlocal textwidth=80
-au BufEnter Changelog setlocal expandtab
+    " Set text width for Changelogs, and do not expand tabs.
+    au BufEnter Changelog setlocal textwidth=80
+    au BufEnter Changelog setlocal expandtab
 
-" Set text width for reStructured text.
-au BufEnter *.rst setlocal textwidth=80
+    " Set text width for reStructured text.
+    au BufEnter *.rst setlocal textwidth=80
 
-" Set text width for Python to 80 to allow for proper docstring and comment formatting.
-au FileType python setlocal textwidth=80
-au FileType python setlocal formatoptions=croqn
+    " Set text width for Python to 80 to allow for proper docstring and comment formatting.
+    au FileType python setlocal textwidth=80
+    au FileType python setlocal formatoptions=croqn
 
-au BufEnter *.gradle setlocal filetype=groovy
+    au BufEnter *.gradle setlocal filetype=groovy
 
-au BufEnter *.sqli setlocal filetype=sql
+    au BufEnter *.sqli setlocal filetype=sql
 
-au FileType mail setlocal fo+=aw
+    au FileType mail setlocal fo+=aw
+augroup END
 
 "-------------------------------------------------------------------------------
 " Misc settings
