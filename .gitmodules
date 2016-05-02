@@ -19,9 +19,6 @@
 [submodule "home/.vim/bundle/tagbar"]
 	path = home/.vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "home/.vim/bundle/powerline"]
-	path = home/.vim/bundle/powerline
-	url = https://github.com/johnmiked15/powerline.git
 [submodule "home/.vim/bundle/vim-colors-solarized"]
 	path = home/.vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
@@ -52,3 +49,6 @@
 [submodule "home/.vim/bundle/vim-fish"]
 	path = home/.vim/bundle/vim-fish
 	url = https://github.com/dag/vim-fish.git
+[submodule "home/.vim/bundle/powerline"]
+	path = home/.vim/bundle/powerline
+	url = https://github.com/powerline/powerline.git
