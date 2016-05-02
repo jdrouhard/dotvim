@@ -18,6 +18,10 @@ filetype on
 filetype plugin on
 filetype indent on
 
+if $SHELL =~ 'fish'
+    set shell=/bin/sh
+endif
+
 "-------------------------------------------------------------------------------
 " Text formatting
 "-------------------------------------------------------------------------------
