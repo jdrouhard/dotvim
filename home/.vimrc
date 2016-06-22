@@ -146,7 +146,7 @@ set wildignore+=*.o,*.obj
 " Key remappings
 "-------------------------------------------------------------------------------
 
-let mapleader=","                    " set our personal modifier key to ','
+let mapleader=" "                    " set our personal modifier key to space
 
 "set pastetoggle=<F2>                 " F2 temporarily disables formatting when
                                      " pasting text
@@ -219,33 +219,17 @@ nmap <silent> <C-j> :cn<CR>
 " Switch between header and implementation using F4.
 map <F4> :A<CR>
 
-" Easier escape (jj is so rarely typed this shouldn't be an issue)
-inoremap jj <ESC>
-"vnoremap jj <ESC>
+" Easier escape (jk is so rarely typed this shouldn't be an issue)
+inoremap jk <ESC>
 
 " Movement
 nnoremap j gj
 nnoremap k gk
 
-"nmap <S-k> kV
-"vmap <S-k> <Up>
-"nmap <S-j> V
-"vmap <S-j> <Down>
-map <C-S-Home> v<Home>gg
-imap <C-S-Home> <Esc><C-S-Home>
-map <C-S-End> v<End>G
-imap <C-S-End> <Esc>l<C-S-End>
+" Miscellaneous
+map <leader>w <C-w>
+map <leader>s :Ag<space>
 
-"nmap <S-h> v
-"vmap <S-h> h
-"nmap <S-l> vl
-"vmap <S-l> l
-map <S-Home> v<Home>
-imap <S-Home> <Esc><S-Home>
-map <S-End> v<End>
-imap <S-End> <Esc>l<S-End>
-
-"-------------------------------------------------------------------------------
 " Search and grep
 "-------------------------------------------------------------------------------
 if !exists('g:agprg')
