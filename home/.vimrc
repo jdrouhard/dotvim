@@ -142,13 +142,16 @@ set nostartofline                    " do not change the X position of the
 "set mouse=a
 set wildignore+=*.o,*.obj
 
+set ttimeoutlen=0                    " don't wait for key codes (<ESC> is instant)
+
+
 "-------------------------------------------------------------------------------
 " Key remappings
 "-------------------------------------------------------------------------------
 
 let mapleader=" "                    " set our personal modifier key to space
 
-"set pastetoggle=<F2>                 " F2 temporarily disables formatting when
+set pastetoggle=<F3>                 " F3 temporarily disables formatting when
                                      " pasting text
 
 " Quickly edit and reload the vimrc file.
@@ -164,11 +167,6 @@ vnoremap > >gv
 
 vmap <tab> >gv
 vmap <s-tab> <gv
-
-map <ESC>[1;5D <C-Left>
-map <ESC>[1;5C <C-Right>
-map! <ESC>[1;5D <C-Left>
-map! <ESC>[1;5C <C-Right>
 
 nnoremap <silent> <C-h> :bprevious<CR>
 nnoremap <silent> <C-l> :bnext<CR>
@@ -195,7 +193,7 @@ endf
 nnoremap <silent> <F2> :call UiToggle(":NERDTreeToggle")<CR>
 
 " Toggle the tag list
-nnoremap <silent> <F3> :call UiToggle(":TagbarToggle")<CR>
+"nnoremap <silent> <F3> :call UiToggle(":TagbarToggle")<CR>
 
 " Close the current buffer
 map <leader>bd :Bclose<CR>
@@ -259,9 +257,7 @@ highlight default link CommandTCharMatched Question
 " Increase the max number of files Command-T caches
 let g:CommandTMaxFiles=500000
 let g:CommandTMaxDepth=5
-
 let g:CommandTMaxCachedDirectories=0
-
 
 " Show the Command-T popup at the top of the screen with a maximum height of 20
 " lines.
@@ -282,47 +278,20 @@ let g:alternateSearchPath = 'sfr:../source,sfr:../src,sfr:../include,sfr:../inc,
 let g:alternateNoDefaultAlternate = 1
 
 " Configure YouCompleteMe
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_key_list_select_completion = ['<C-j>', '<Tab>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<S-Tab>', '<Up>']
 
-nnoremap <leader>jd :YcmCompleter GoTo<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-
-"-------------------------------------------------------------------------------
-" Configure (keyword) completion
-"-------------------------------------------------------------------------------
-set tag=./tags;/
-
-function! OmniPopup(action)
-    if pumvisible()
-        if a:action == "down"
-            return "\<C-N>"
-        elseif a:action == "up"
-            return "\<C-P>"
-        endif
-    endif
-    return a:action
-endfunction
-
-"" Remap Ctrl-j and Ctrl-k to move up and down in popup lists.
-"inoremap <silent> <C-j> <C-R>=OmniPopup("down")<CR>
-"inoremap <silent> <C-k> <C-R>=OmniPopup("up")<CR>
-
-"" Open the completion menu using C-Space, note that C-Space inserts the <Nul> character.
-"inoremap <silent> <expr> <Nul> pumvisible() ? "" : "\<C-X>\<C-U>\<Down>"
-
-"" Escape should always close the completion menu at once.
-inoremap <silent> <expr> <Esc> pumvisible() ? "\<C-E>\<Esc>" : "\<Esc>"
-
-"" Enter should select the currently highlighted menu item.
-"inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+"nnoremap <leader>jd :YcmCompleter GoTo<CR>
 
 "" Configure (keyword) completion.
 set completeopt=longest,menuone
 
-"" Do not scan Boost include files.
-"set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
+" Configure vim-rtags
+let g:rtagsUseLocationList = 0
 
 "-------------------------------------------------------------------------------
 " File type specific settings
