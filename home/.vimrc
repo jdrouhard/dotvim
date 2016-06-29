@@ -72,24 +72,8 @@ set number                           " always show line numbers
 set numberwidth=5                    " we are good for up to 99999 lines
 "set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
-"set cursorline                       " highlight current line
+set cursorline                       " highlight current line
 set modeline                         " enable modeline identifiers in files
-
-" Enable Doxygen syntax highlighting.
-let g:load_doxygen_syntax=1
-let g:doxygen_javadoc_autobrief=0
-
-" Use custom colors for Doxygen syntax highlighting.
-"highlight link doxygenSpecialOneLineDesc Comment
-
-"highlight SpecialComment cterm=NONE ctermfg=240
-"highlight link doxygenSpecial SpecialComment
-"highlight link doxygenBOther SpecialComment
-"highlight link doxygenSmallSpecial SpecialComment
-
-"highlight doxygenParamName cterm=bold ctermfg=249
-"highlight link doxygenArgumentWord doxygenParamName
-"highlight link doxygenCodeWord doxygenParamName
 
 syntax on                            " enable syntax highlighting
 
@@ -306,17 +290,10 @@ endfunction
 
 augroup vimrc_autocmd
     autocmd!
-    " Syntax highlighting for Qt qmake project files.
-    "au BufEnter *.pro setlocal syntax=pro
-
     " Syntax highlighting for Go.
-    "au BufEnter *.go setlocal syntax=go
+    au BufEnter *.go setlocal syntax=go
 
-    " Set tab stop to 1 for Qt UI definition files.
-    au BufEnter *.ui setlocal tabstop=1
-    au BufEnter *.ui setlocal shiftwidth=1
-
-    " Set tab stop to 1 for CMake files.
+    " Set tab stop to 2 for CMake files.
     au BufEnter CMakeLists.txt setlocal tabstop=2
     au BufEnter CMakeLists.txt setlocal shiftwidth=2
     au BufEnter *.cmake setlocal tabstop=2
@@ -332,9 +309,6 @@ augroup vimrc_autocmd
     " Strip trailing white spaces in source code.
     "au BufWritePre *.cpp,*.hpp,*.h,*.c :call StripTrailingWhitespace()
     au BufWritePre .vimrc,*.js,*.php :call StripTrailingWhitespace()
-
-    " Do not expand tabs for web related source code.
-    au BufEnter *.php,*.html,*.css,*.js setlocal noexpandtab
 
     " Set text width for C++ code to be able to easily format comments.
     au FileType cpp setlocal textwidth=80
@@ -360,8 +334,6 @@ augroup vimrc_autocmd
     au BufEnter *.gradle setlocal filetype=groovy
 
     au BufEnter *.sqli setlocal filetype=sql
-
-    au FileType mail setlocal fo+=aw
 augroup END
 
 "-------------------------------------------------------------------------------
