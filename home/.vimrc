@@ -277,6 +277,12 @@ set completeopt=longest,menuone
 " Configure vim-rtags
 let g:rtagsUseLocationList = 0
 
+" Configure vim-gitgutter
+let g:gitgutter_sign_column_always = 1
+
+" Configure gitv
+let g:Gitv_TruncateCommitSubjects = 1
+
 "-------------------------------------------------------------------------------
 " File type specific settings
 "-------------------------------------------------------------------------------
