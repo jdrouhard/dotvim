@@ -1090,7 +1090,7 @@ function! Base16Menu()
 
         an    &Base16.-sep1-                          <Nop>
 
-        amenu &Base16.&Autogenerate\ options          :base16Options<CR>
+        amenu &Base16.&Autogenerate\ options          :Base16Options<CR>
 
         an    &Base16.-sep2-                          <Nop>
 

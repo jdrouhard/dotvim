@@ -5,7 +5,7 @@
 runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
 
-let g:pathogen_disabled = ['tagbar'] " TODO: investigate slowness of large files
+let g:pathogen_disabled = ['tagbar', 'vim-colors-solarized']
 if has("win16") || has("win32") || has("win64")
     call add(g:pathogen_disabled, 'YouCompleteMe')
 endif
@@ -45,25 +45,29 @@ set t_so=[7m                         " set escape codes for standout mode
 set t_ZH=[3m                         " set escape codes for italics mode
 set t_ZR=[23m                        " set escape codes for italics mode
 
+" Molokai settings
+"set t_Co=256                         " force 256 colors by default
+let g:molokai_original=0
+let g:rehash256=1
+"colorscheme molokai                  " set colorscheme for 256 color terminals
+
+" Base16 settings
 if &t_Co != 8
     set t_Co=16
 endif
-
-" Molokai settings
-"set t_Co=256                         " force 256 colors by default
-"let g:molokai_original = 0
-"let g:rehash256=1
-"colorscheme molokai                  " set colorscheme for 256 color terminals
-
-" Solarized settings
-set background=dark
-let g:solarized_termtrans=1
-let g:solarized_bold=0
-highlight link YcmErrorSection ErrorMsg
+"let g:solarized_termtrans=1
+"let g:solarized_bold=0
 "colorscheme solarized
 
+set background=dark
 let g:base16_termtrans=1
 colorscheme base16
+
+call toggletheme#maptransparency("<F10>")
+call toggletheme#mapbg("<F11>")
+call toggletheme#map256("<F12>")
+
+highlight link YcmErrorSection ErrorMsg
 
 set backspace=indent,eol,start       " allow backspacing over everything in
                                      " insert mode
@@ -72,7 +76,7 @@ set number                           " always show line numbers
 set numberwidth=5                    " we are good for up to 99999 lines
 "set ruler                            " show the cursor position all the time
 set showcmd                          " display incomplete commands
-set cursorline                       " highlight current line
+"set cursorline                       " highlight current line
 set modeline                         " enable modeline identifiers in files
 
 syntax on                            " enable syntax highlighting
