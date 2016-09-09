@@ -78,6 +78,8 @@ set numberwidth=5                    " we are good for up to 99999 lines
 set showcmd                          " display incomplete commands
 "set cursorline                       " highlight current line
 set modeline                         " enable modeline identifiers in files
+set cmdheight=2                      " set cmdheight=2 to avoid pesky
+                                     " "Press ENTER to continue" after errors
 
 syntax on                            " enable syntax highlighting
 
@@ -123,15 +125,12 @@ set hidden                           " be able to put the current buffer to the
                                      " remember marks and undo-history when a
                                      " background buffer becomes current again
 set history=50                       " keep 50 lines of command line history
-"set printoptions=paper:a4,duplex:on  " print on a4 by default and enable duplex
-                                     " printing
 set nostartofline                    " do not change the X position of the
                                      " cursor when paging up and down
 "set mouse=a
-set wildignore+=*.o,*.obj
+set wildignore+=*.o,*.obj,*.dwo
 
 set ttimeoutlen=0                    " don't wait for key codes (<ESC> is instant)
-
 
 "-------------------------------------------------------------------------------
 " Key remappings
@@ -182,6 +181,13 @@ nnoremap <silent> <F2> :call UiToggle(":NERDTreeToggle")<CR>
 
 " Toggle the tag list
 "nnoremap <silent> <F3> :call UiToggle(":TagbarToggle")<CR>
+
+" Flush command-t buffer
+nmap <silent> <leader>r :CommandTFlush<CR>
+
+" YouCompleteMe mappings
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
 
 " Close the current buffer
 map <leader>bd :Bclose<CR>
@@ -249,31 +255,24 @@ let g:CommandTMaxCachedDirectories=0
 
 " Show the Command-T popup at the top of the screen with a maximum height of 20
 " lines.
-let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 30
 
 " Use Escape to dismiss the Command-T popup menu.
 let g:CommandTCancelMap = '<ESC>'
 
-" Use MRU ordering for buffer list in Command-T.
-let g:CommandTUseMruBufferOrder = 1
+" Use git ls-files to produce list of files
+let g:CommandTFileScanner='git'
 
-nmap <silent> <leader>r :CommandTFlush<CR>
-
-" Configure the search paths to look for include/source files, and never open a
-" non existing source file.
-let g:alternateSearchPath = 'sfr:../source,sfr:../src,sfr:../include,sfr:../inc,sfr:../itf'
+" Configure "A" plugin
+" Never open a non-existing file
 let g:alternateNoDefaultAlternate = 1
 
 " Configure YouCompleteMe
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_key_list_select_completion = ['<C-j>', '<Tab>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<S-Tab>', '<Up>']
-
-"nnoremap <leader>jd :YcmCompleter GoTo<CR>
 
 "" Configure (keyword) completion.
 set completeopt=longest,menuone
