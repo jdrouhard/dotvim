@@ -138,7 +138,7 @@ set ttimeoutlen=0                    " don't wait for key codes (<ESC> is instan
 
 let mapleader=" "                    " set our personal modifier key to space
 
-set pastetoggle=<F3>                 " F3 temporarily disables formatting when
+set pastetoggle=<leader>p            " <leader>p temporarily disables formatting when
                                      " pasting text
 
 " Quickly edit and reload the vimrc file.
@@ -186,7 +186,7 @@ nnoremap <silent> <F2> :call UiToggle(":NERDTreeToggle")<CR>
 nmap <silent> <leader>r :CommandTFlush<CR>
 
 " YouCompleteMe mappings
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 
 " Close the current buffer
@@ -208,8 +208,12 @@ nmap <silent> <leader>m :make<CR>
 nmap <silent> <C-k> :cp<CR>
 nmap <silent> <C-j> :cn<CR>
 
-" Switch between header and implementation using F4.
+" Split window into .h and .cpp using F3
+map <F3> :AS<CR>
+" Switch between .h and .cpp using F4.
 map <F4> :A<CR>
+" Switch between .h and _inline.h using F5.
+map <F5> :AI<CR>
 
 " Easier escape (jk is so rarely typed this shouldn't be an issue)
 inoremap jk <ESC>
