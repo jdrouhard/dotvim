@@ -6,9 +6,6 @@ runtime submodules/pathogen/autoload/pathogen.vim
 filetype off
 
 let g:pathogen_disabled = ['tagbar', 'vim-colors-solarized']
-if has("win16") || has("win32") || has("win64")
-    call add(g:pathogen_disabled, 'YouCompleteMe')
-endif
 
 execute pathogen#infect()
 execute pathogen#helptags()
@@ -17,10 +14,6 @@ execute pathogen#helptags()
 filetype on
 filetype plugin on
 filetype indent on
-
-if $SHELL =~ 'fish'
-    set shell=/bin/sh
-endif
 
 "-------------------------------------------------------------------------------
 " Text formatting
@@ -99,6 +92,7 @@ set scrolloff=3                      " maintain more context around the cursor
 set linebreak                        " wrap lines at logical word boundaries
 set showbreak=↪                      " character to display in front of wrapper
                                      " lines
+set breakindent                      " indent wrapped lines
 set showmatch                        " enable brace highlighting
 set ignorecase                       " ignore case
 set smartcase                        " ignore case if search pattern is all
@@ -138,7 +132,7 @@ set ttimeoutlen=0                    " don't wait for key codes (<ESC> is instan
 
 let mapleader=" "                    " set our personal modifier key to space
 
-set pastetoggle=<leader>p            " <leader>p temporarily disables formatting when
+set pastetoggle=<F9>                 " <F9> temporarily disables formatting when
                                      " pasting text
 
 " Quickly edit and reload the vimrc file.
