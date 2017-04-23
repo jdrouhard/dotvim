@@ -34,9 +34,6 @@ set wrap                             " wrap overlong lines
 " UI settings
 "-------------------------------------------------------------------------------
 
-set t_so=[7m                         " set escape codes for standout mode
-set t_ZH=[3m                         " set escape codes for italics mode
-set t_ZR=[23m                        " set escape codes for italics mode
 
 " Molokai settings
 "set t_Co=256                         " force 256 colors by default
@@ -54,11 +51,22 @@ endif
 
 set background=dark
 let g:base16_termtrans=1
+let g:base16_term_italics=1
 colorscheme base16
 
 call toggletheme#maptransparency("<F10>")
 call toggletheme#mapbg("<F11>")
 call toggletheme#map256("<F12>")
+
+" Airline theme settings
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the status line)
+
+"let g:airline_theme='solarized'
+let g:airline_powerline_fonts=1
+let g:solarized_base16=1
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#buffer_nr_show=1
+let g:airline#extensions#tabline#buffer_nr_format='%s '
 
 highlight link YcmErrorSection ErrorMsg
 
@@ -125,6 +133,8 @@ set nostartofline                    " do not change the X position of the
 set wildignore+=*.o,*.obj,*.dwo
 
 set ttimeoutlen=0                    " don't wait for key codes (<ESC> is instant)
+set updatetime=250                   " write swap file after 250ms of inactivity
+                                     " instead of 4000
 
 "-------------------------------------------------------------------------------
 " Key remappings
@@ -157,11 +167,6 @@ nnoremap <leader>v V`]
 nnoremap / /\v
 vnoremap / /\v
 
-" Switch Ctri-i and Ctrl-o, jumping backwards using Ctrl-i and forwards using
-" Ctrl-o seems more logical given the keyboard layout.
-nnoremap <C-i> <C-o>
-nnoremap <C-o> <C-i>
-
 " Toggle for side bar
 fu! UiToggle(command)
   let b = bufnr("%")
@@ -173,20 +178,8 @@ endf
 " Toggle the file system tree with F2
 nnoremap <silent> <F2> :call UiToggle(":NERDTreeToggle")<CR>
 
-" Toggle the tag list
-"nnoremap <silent> <F3> :call UiToggle(":TagbarToggle")<CR>
-
-" Flush command-t buffer
-nmap <silent> <leader>r :CommandTFlush<CR>
-
-" YouCompleteMe mappings
-nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
-nnoremap <leader>jd :YcmCompleter GoTo<CR>
-
 " Close the current buffer
 map <leader>bd :Bclose<CR>
-" Remap Ctrl-q to close the current buffer
-nmap <silent> <C-q> :Bclose<CR>
 
 " Remap K to do nothing instead of searching the man pages.
 nnoremap K <nop>
@@ -216,50 +209,28 @@ inoremap jk <ESC>
 nnoremap j gj
 nnoremap k gk
 
+" Configure fzf mappings
+map <leader>s :Ag<space>
+map <C-p> :Files<CR>
+map <leader>l :Buffer<CR>
+map <leader>t :GFiles<CR>
+map <leader>h :Commands<CR>
+map <leader>? :Helptags<CR>
+map <leader>gs :GFiles?<CR>
+map <leader>gl :Commits<CR>
+map <leader>gbl :BCommits<CR>
+inoremap <C-x><C-l> <plug>(fzf-complete-line)
+
+" YouCompleteMe mappings
+nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
 " Miscellaneous
 map <leader>w <C-w>
-map <leader>s :Ag<space>
-
-" Search and grep
-"-------------------------------------------------------------------------------
-if !exists('g:agprg')
-    let g:agprg = 'Dispatch ag --nogroup --nocolor --column'
-endif
-
-command! -nargs=* Search call Search(<f-args>)
-command! -nargs=* Ag call Search(<f-args>)
-function! Search(...)
-    execute g:agprg . ' ' . join(a:000, ' ')
-endfunction
 
 "-------------------------------------------------------------------------------
 " Configure plugins
 "-------------------------------------------------------------------------------
-
-" Enable Powerline
-runtime bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
-
-set laststatus=2 " Always display the statusline in all windows
-set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the status line)
-
-" Configure Command-T plugin.
-" Improve highlighting of matching characters in Command-T's popup window.
-highlight default link CommandTCharMatched Question
-
-" Increase the max number of files Command-T caches
-let g:CommandTMaxFiles=500000
-let g:CommandTMaxDepth=5
-let g:CommandTMaxCachedDirectories=0
-
-" Show the Command-T popup at the top of the screen with a maximum height of 20
-" lines.
-let g:CommandTMaxHeight = 30
-
-" Use Escape to dismiss the Command-T popup menu.
-let g:CommandTCancelMap = '<ESC>'
-
-" Use git ls-files to produce list of files
-let g:CommandTFileScanner='git'
 
 " Configure "A" plugin
 " Never open a non-existing file
@@ -283,6 +254,21 @@ let g:gitgutter_sign_column_always = 1
 
 " Configure gitv
 let g:Gitv_TruncateCommitSubjects = 1
+
+" Configure vim-polyglot
+let g:polyglot_disabled = ['c/c++']
+
+" Configure fzf
+let g:fzf_layout = { 'down': '~15%' }
+let g:fzf_commits_log_options = '--graph --color=always --all --pretty=tformat:"%C(auto)%h%d %s %C(green)(%ar)%Creset %C(blue)<%an>%Creset"'
+
+au VimEnter * command! -bang -nargs=? -complete=dir Files
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+au VimEnter * command! -bang -nargs=* Ag
+            \ call fzf#vim#ag(<q-args>,
+            \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+            \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+            \                 <bang>0)
 
 "-------------------------------------------------------------------------------
 " File type specific settings
