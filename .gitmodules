@@ -61,3 +61,6 @@
 [submodule "home/.vim/bundle/nerdtree-git-plugin"]
 	path = home/.vim/bundle/nerdtree-git-plugin
 	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
+[submodule "home/.vim/bundle/onedark"]
+	path = home/.vim/bundle/onedark
+	url = https://github.com/joshdick/onedark.vim.git
